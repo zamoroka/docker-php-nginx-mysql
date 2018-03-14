@@ -17,6 +17,7 @@ services:
       - ../log/${NGINX_HOST}/nginx:/var/log/nginx
     links:
       - php
+      - mysql
 
   php:
     container_name: php
