@@ -2,5 +2,8 @@ composer create-project --repository-url=https://repo.magento.com/ magento/proje
 find . -type f -exec chmod 644 {} \;     && find . -type d -exec chmod 755 {} \;     && chmod -R 777 ./var ./pub ./generated     && chown -R :www-data .     && chmod u+x ./bin/magento    && chgrp -R www-data ./app
 composer create-project opencart/opencart .
 find . -type f -exec chmod 644 {} \;     && find . -type d -exec chmod 755 {} \;     && chown -R www-data:www-data .
-mv ./upload/config-dist.php ./upload/config.php
-mv ./upload/admin/config-dist.php ./upload/admin/config.php
+mv ./upload/config-dist.php ./upload/config.php    && mv ./upload/admin/config-dist.php ./upload/admin/config.php
+curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-latest.tar.gz";
+tar -xzf wordpress.tar.gz -C .
+rm wordpress.tar.gz;
+chown -R www-data:www-data .
