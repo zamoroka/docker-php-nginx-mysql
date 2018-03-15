@@ -45,3 +45,22 @@ curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-latest.tar.gz"; \
 # set permissions 
 chown -R www-data:www-data .
 ```
+
+#### install wordpress
+```
+composer create-project sylius/sylius-standard .
+
+# set parameters: 
+#     env(SYLIUS_DATABASE_DRIVER): pdo_mysql
+#     env(SYLIUS_DATABASE_HOST): mysql
+#     env(SYLIUS_DATABASE_PORT): 3306
+#     env(SYLIUS_DATABASE_NAME): test
+#     env(SYLIUS_DATABASE_USER): root
+#     env(SYLIUS_DATABASE_PASSWORD): root
+
+php bin/console sylius:install
+
+    
+# set permissions 
+chown -R www-data:www-data .
+```

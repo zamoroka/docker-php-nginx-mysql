@@ -7,3 +7,6 @@ curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-latest.tar.gz";
 tar -xzf wordpress.tar.gz -C .
 rm wordpress.tar.gz;
 chown -R www-data:www-data .
+composer create-project sylius/sylius-standard .
+php bin/console sylius:install
+chown -R www-data:www-data .
