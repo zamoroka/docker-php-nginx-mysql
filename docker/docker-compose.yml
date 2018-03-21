@@ -21,10 +21,20 @@ services:
 
   php:
     container_name: ${PROJECT_TYPE}_php
-    build: .
+    build: ./fpm
     restart: always
     env_file:
       - ".env"
+    volumes:
+      - ../data/${NGINX_HOST}/www:/var/www
+
+  workspace:
+    container_name: ${PROJECT_TYPE}_workspace
+    build: ./workspace
+    env_file:
+      - ".env"
+    stdin_open: true
+    tty: true
     volumes:
       - ../data/${NGINX_HOST}/www:/var/www
       - ../.conf/.bashrc:/root/.bashrc

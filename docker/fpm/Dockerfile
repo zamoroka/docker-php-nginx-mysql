@@ -1,16 +1,9 @@
 FROM php:7.1-fpm
 
-# https support
-RUN apt-get update && apt-get install -y  --no-install-recommends\
-    apt-transport-https \
-    ca-certificates
-
 # install packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
-    git \
     mysql-client \
     curl \
-    nano \
     zip \
     unzip \
     libmemcached-dev \
@@ -42,13 +35,6 @@ RUN docker-php-ext-install mcrypt \
   && docker-php-ext-install soap \
   && docker-php-ext-install exif \
   && docker-php-ext-install pcntl
-
-# Install the composer
-RUN curl -sS https://getcomposer.org/installer | \
-    php -- --install-dir=/usr/local/bin --filename=composer
-
-RUN chown -R www-data:www-data /var/www/
-RUN chmod -R g+w /var/www/
 
 # PHP configs
 RUN { \

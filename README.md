@@ -6,7 +6,7 @@ docker-compose up -d
 
 #### get into the work container 
 ```
-docker exec -it php bash
+docker exec -it magento_workspace bash
 ```
 
 #### install magento 2
