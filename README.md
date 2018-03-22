@@ -1,52 +1,51 @@
-#### init containers
+### containers
 ```
+# init
 cd docker
 docker-compose up -d
+
+# get into the work container 
+docker exec -it magento_workspace bash
+
+# create database
+docker exec -it mysql /bin/sh -c "echo 'create database magento2;' | mysql -uroot -proot"
 ```
 
-#### get into the work container 
+### permissions
 ```
-docker exec -it magento_workspace bash
+chown -R www-data:www-data . \
+    && chmod -R o+r . \
+    && chmod -R g+w . \
+    && find . -type d -exec chmod g+s {} \;
 ```
 
 #### install magento 2
 ```
-composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition .
-
-# set permissions
-find . -type f -exec chmod 644 {} \; \
-    && find . -type d -exec chmod 755 {} \; \
-    && chmod -R 777 ./var ./pub ./generated \
-    && chown -R www-data:www-data . \
-    && chmod u+x ./bin/magento \
-    && chgrp -R www-data ./app
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition . \
+    && composer clearcache
 ```
 
 #### install opencart
 ```
 composer create-project opencart/opencart . \
     && mv ./upload/config-dist.php ./upload/config.php \
-    && mv ./upload/admin/config-dist.php ./upload/admin/config.php
-
-# set permissions
-find . -type f -exec chmod 644 {} \; \
-    && find . -type d -exec chmod 755 {} \; \
-    && chown -R www-data:www-data .
+    && mv ./upload/admin/config-dist.php ./upload/admin/config.php \
+    && composer clearcache
 ```
 
 #### install wordpress
 ```
-curl -o wordpress.tar.gz -fSL "https://wordpress.org/wordpress-latest.tar.gz"; \
-    && tar -xzf wordpress.tar.gz -C . \
-    && mv wordpress/* . \
-    && rm wordpress.tar.gz \
-    && rm -R wordpress
-    
-# set permissions 
-chown -R www-data:www-data .
+git clone https://github.com/WordPress/WordPress.git --depth 1 .
 ```
 
-#### install wordpress
+#### install prestashop
+```
+git clone https://github.com/PrestaShop/PrestaShop.git --depth 1 . \
+    && composer install \
+    && composer clearcache
+```
+
+#### install sylius
 ```
 composer create-project sylius/sylius-standard .
 
@@ -54,13 +53,9 @@ composer create-project sylius/sylius-standard .
 #     env(SYLIUS_DATABASE_DRIVER): pdo_mysql
 #     env(SYLIUS_DATABASE_HOST): mysql
 #     env(SYLIUS_DATABASE_PORT): 3306
-#     env(SYLIUS_DATABASE_NAME): test
+#     env(SYLIUS_DATABASE_NAME): sylius
 #     env(SYLIUS_DATABASE_USER): root
 #     env(SYLIUS_DATABASE_PASSWORD): root
 
 php bin/console sylius:install
-
-    
-# set permissions 
-chown -R www-data:www-data .
 ```

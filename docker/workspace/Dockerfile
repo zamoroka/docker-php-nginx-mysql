@@ -65,4 +65,10 @@ RUN wget https://phar.phpunit.de/phpunit-6.0.phar
 RUN chmod +x phpunit-6.0.phar
 RUN mv phpunit-6.0.phar /usr/local/bin/phpunit
 
+# set permissions
+RUN chown -R www-data:www-data /var/www \
+    && chmod -R o+r /var/www \
+    && chmod -R g+w /var/www \
+    && find /var/www -type d -exec chmod g+s {} \;
+
 WORKDIR /var/www/html

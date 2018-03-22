@@ -12,21 +12,12 @@ services:
     environment:
       - NGINX_HOST=${NGINX_HOST}
     volumes:
-      - ../data/${NGINX_HOST}/www:/var/www
+      - ../data/www/${NGINX_HOST}/html:/var/www/html
       - ../.conf/nginx/${PROJECT_TYPE}.conf:/etc/nginx/conf.d/default.conf
       - ../log/${NGINX_HOST}/nginx:/var/log/nginx
     links:
       - php
       - mysql
-
-  php:
-    container_name: ${PROJECT_TYPE}_php
-    build: ./fpm
-    restart: always
-    env_file:
-      - ".env"
-    volumes:
-      - ../data/${NGINX_HOST}/www:/var/www
 
   workspace:
     container_name: ${PROJECT_TYPE}_workspace
@@ -36,13 +27,22 @@ services:
     stdin_open: true
     tty: true
     volumes:
-      - ../data/${NGINX_HOST}/www:/var/www
+      - ../data/www/${NGINX_HOST}:/var/www
       - ../.conf/.bashrc:/root/.bashrc
       - ../.conf/.bash_history:/root/.bash_history
       - ../.conf/composer-auth.json:/root/.composer/auth.json
 
+  php:
+    container_name: ${PROJECT_TYPE}_php
+    build: ./fpm
+    restart: always
+    env_file:
+      - ".env"
+    volumes:
+      - ../data/www/${NGINX_HOST}/html:/var/www/html
+
   mysql:
-    container_name: ${PROJECT_TYPE}_mysql
+    container_name: mysql
     image: mysql
     restart: always
     ports:
@@ -55,4 +55,4 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ../data/${NGINX_HOST}/mysql:/var/lib/mysql
+      - ../data/mysql:/var/lib/mysql
