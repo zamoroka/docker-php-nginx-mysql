@@ -47,7 +47,8 @@ git clone https://github.com/PrestaShop/PrestaShop.git --depth 1 . \
 
 #### install sylius
 ```
-composer create-project sylius/sylius-standard .
+composer create-project sylius/sylius-standard . \
+    && composer clearcache
 
 # set parameters: 
 #     env(SYLIUS_DATABASE_DRIVER): pdo_mysql
@@ -57,5 +58,7 @@ composer create-project sylius/sylius-standard .
 #     env(SYLIUS_DATABASE_USER): root
 #     env(SYLIUS_DATABASE_PASSWORD): root
 
-php bin/console sylius:install
+php bin/console sylius:install -e prod \
+    && yarn install \
+    && yarn run gulp
 ```
