@@ -42,7 +42,7 @@ services:
       - ../data/www/${NGINX_HOST}/html:/var/www/html
 
   mysql:
-    container_name: mysql
+    container_name: ${PROJECT_TYPE}_mysql
     image: mysql
     restart: always
     ports:
@@ -55,4 +55,4 @@ services:
       - MYSQL_USER=${MYSQL_USER}
       - MYSQL_PASSWORD=${MYSQL_PASSWORD}
     volumes:
-      - ../data/mysql:/var/lib/mysql
+      - ../data/www/${NGINX_HOST}/mysql:/var/lib/mysql
