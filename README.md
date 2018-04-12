@@ -19,6 +19,12 @@ chown -R www-data:www-data . \
     && find . -type d -exec chmod g+s {} \;
 ```
 
+#### install magento 1
+```
+git clone https://github.com/OpenMage/magento-lts.git --depth 1 .
+
+```
+
 #### install magento 2
 ```
 composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition . \

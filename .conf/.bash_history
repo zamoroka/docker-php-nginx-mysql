@@ -10,3 +10,17 @@ chown -R www-data:www-data .
 composer create-project sylius/sylius-standard .
 php bin/console sylius:install
 chown -R www-data:www-data .
+ls -a
+composer create-project openmage/magento-lts .
+composer create-project openmage/magento-lts=1.9.3.4 .
+ls -a
+git clone https://github.com/OpenMage/magento-lts.git --depth 1 .
+cd ..
+ls -a
+cd magento2.local/
+ls -a
+cd html/
+exit
+ls -a
+git clone https://github.com/OpenMage/magento-lts.git --depth 1 .
+chown -R www-data:www-data .     && chmod -R o+r .     && chmod -R g+w .     && find . -type d -exec chmod g+s {} \;
