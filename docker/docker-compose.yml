@@ -43,6 +43,7 @@ services:
 
   mysql:
     container_name: ${PROJECT_TYPE}_mysql
+    command: --max_allowed_packet=32505856      # Set max_allowed_packet to 256M (or any other value)
     image: mysql
     restart: always
     ports:
